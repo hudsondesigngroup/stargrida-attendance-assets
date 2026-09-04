@@ -5,88 +5,72 @@
 
   <title>별그리다 출결</title>
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1,
+             maximum-scale=1,
+             user-scalable=no,
+             viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#b9e9fb">
 
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="별그리다 출결">
 
-  <meta name="theme-color" content="#b9e9fb">
+  <link
+    rel="apple-touch-icon"
+    sizes="512x512"
+    href="./StarGrida_iOS_512.png"
+  >
 
-  <link rel="apple-touch-icon"
-        sizes="180x180"
-        href="./StarGrida_Attendance_512.png">
-
-  <link rel="icon"
-        type="image/png"
-        href="./StarGrida_Attendance_512.png">
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="512x512"
+    href="./StarGrida_iOS_512.png"
+  >
 
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
-      font-family: Arial, "Noto Sans KR", sans-serif;
       background: #b9e9fb;
+      overflow: hidden;
     }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+    #attendanceApp {
+      position: fixed;
+      top: 0;
+      left: 0;
 
-    .box {
-      padding: 30px;
-    }
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
 
-    img {
-      width: 150px;
-      height: 150px;
-      border-radius: 30px;
-    }
+      margin: 0;
+      padding: 0;
+      border: 0;
 
-    h1 {
-      margin-top: 20px;
-      font-size: 26px;
-    }
-
-    p {
-      color: #627782;
-      font-size: 16px;
-      line-height: 1.6;
+      display: block;
+      background: #b9e9fb;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="box">
-    <img src="./StarGrida_Attendance_512.png"
-         alt="별그리다">
-
-    <h1>별그리다 출결</h1>
-
-    <p>
-      아이폰 홈 화면에 추가한 뒤<br>
-      아이콘을 눌러주세요.
-    </p>
-  </div>
-
-  <script>
-    const ATTENDANCE_URL =
-      'https://script.google.com/macros/s/AKfycbxBPzUg6g3jmztjuUSfoIyIfHtuRKpADADKPq7S6FLJSbmhl57Xmm1jtSnxtfTo8y9t6A/exec';
-
-    const isStandalone =
-      window.navigator.standalone === true ||
-      window.matchMedia('(display-mode: standalone)').matches;
-
-    if (isStandalone) {
-      window.location.replace(ATTENDANCE_URL);
-    }
-  </script>
+  <iframe
+    id="attendanceApp"
+    src="https://script.google.com/macros/s/AKfycbxBPzUg6g3jmztjuUSfoIyIfHtuRKpADADKPq7S6FLJSbmhl57Xmm1jtSnxtfTo8y9t6A/exec"
+    title="별그리다 출결"
+    allow="fullscreen"
+  ></iframe>
 
 </body>
 </html>
