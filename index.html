@@ -34,20 +34,25 @@
   >
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     html,
     body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      background: #b9e9fb;
       overflow: hidden;
+      background: #b9e9fb;
+      font-family: Arial, "Noto Sans KR", sans-serif;
     }
 
+    /* 실제 출결 시스템 */
     #attendanceApp {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
 
       width: 100vw;
       height: 100vh;
@@ -60,17 +65,199 @@
       display: block;
       background: #b9e9fb;
     }
+
+    /* 로딩 화면 */
+    #loadingScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding:
+        env(safe-area-inset-top, 0px)
+        env(safe-area-inset-right, 0px)
+        env(safe-area-inset-bottom, 0px)
+        env(safe-area-inset-left, 0px);
+
+      background:
+        linear-gradient(
+          180deg,
+          #b9e9fb 0%,
+          #dff5fd 60%,
+          #f5fcff 100%
+        );
+
+      opacity: 1;
+      visibility: visible;
+
+      transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+    }
+
+    #loadingScreen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-content {
+      text-align: center;
+      transform: translateY(-4vh);
+    }
+
+    .loading-icon {
+      width: 112px;
+      height: 112px;
+
+      display: block;
+      margin: 0 auto 18px;
+
+      object-fit: contain;
+
+      border-radius: 24px;
+
+      box-shadow:
+        0 10px 30px rgba(0, 100, 160, 0.14);
+    }
+
+    .loading-title {
+      margin: 0;
+
+      color: #172033;
+
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .loading-message {
+      margin-top: 11px;
+
+      color: #64808f;
+
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .loading-dots {
+      display: inline-block;
+      width: 28px;
+      text-align: left;
+    }
+
+    @media (max-width: 480px) {
+      .loading-icon {
+        width: 100px;
+        height: 100px;
+      }
+
+      .loading-title {
+        font-size: 24px;
+      }
+
+      .loading-message {
+        font-size: 15px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- 실제 출결 시스템 -->
   <iframe
     id="attendanceApp"
     src="https://script.google.com/macros/s/AKfycbxBPzUg6g3jmztjuUSfoIyIfHtuRKpADADKPq7S6FLJSbmhl57Xmm1jtSnxtfTo8y9t6A/exec"
     title="별그리다 출결"
     allow="fullscreen"
   ></iframe>
+
+  <!-- 로딩 화면 -->
+  <div id="loadingScreen">
+    <div class="loading-content">
+
+      <img
+        class="loading-icon"
+        src="./StarGrida_iOS_512.png"
+        alt="별그리다"
+      >
+
+      <h1 class="loading-title">
+        별그리다 출결
+      </h1>
+
+      <div class="loading-message">
+        출결 시스템을 불러오는 중입니다<span
+          id="loadingDots"
+          class="loading-dots"
+        >.</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const iframe =
+      document.getElementById('attendanceApp');
+
+    const loadingScreen =
+      document.getElementById('loadingScreen');
+
+    const loadingDots =
+      document.getElementById('loadingDots');
+
+    let dotCount = 1;
+
+    const dotTimer =
+      setInterval(function () {
+
+        dotCount++;
+
+        if (dotCount > 3) {
+          dotCount = 1;
+        }
+
+        loadingDots.textContent =
+          '.'.repeat(dotCount);
+
+      }, 400);
+
+
+    function hideLoadingScreen() {
+
+      clearInterval(dotTimer);
+
+      setTimeout(function () {
+
+        loadingScreen.classList.add('hide');
+
+      }, 180);
+    }
+
+
+    iframe.addEventListener(
+      'load',
+      hideLoadingScreen
+    );
+
+
+    /* 혹시 load 이벤트가 늦어져도
+       로딩화면이 계속 남지 않도록 안전장치 */
+    setTimeout(function () {
+
+      if (
+        !loadingScreen.classList.contains('hide')
+      ) {
+
+        hideLoadingScreen();
+      }
+
+    }, 8000);
+  </script>
 
 </body>
 </html>
