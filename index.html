@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <title>별그리다 출결</title>
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="별그리다 출결">
+
+  <meta name="theme-color" content="#b9e9fb">
+
+  <link rel="apple-touch-icon"
+        sizes="180x180"
+        href="./StarGrida_Attendance_512.png">
+
+  <link rel="icon"
+        type="image/png"
+        href="./StarGrida_Attendance_512.png">
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      background: #b9e9fb;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .box {
+      padding: 30px;
+    }
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 30px;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 26px;
+    }
+
+    p {
+      color: #627782;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <img src="./StarGrida_Attendance_512.png"
+         alt="별그리다">
+
+    <h1>별그리다 출결</h1>
+
+    <p>
+      아이폰 홈 화면에 추가한 뒤<br>
+      아이콘을 눌러주세요.
+    </p>
+  </div>
+
+  <script>
+    const ATTENDANCE_URL =
+      'https://script.google.com/macros/s/AKfycbxBPzUg6g3jmztjuUSfoIyIfHtuRKpADADKPq7S6FLJSbmhl57Xmm1jtSnxtfTo8y9t6A/exec';
+
+    const isStandalone =
+      window.navigator.standalone === true ||
+      window.matchMedia('(display-mode: standalone)').matches;
+
+    if (isStandalone) {
+      window.location.replace(ATTENDANCE_URL);
+    }
+  </script>
+
+</body>
+</html>
