@@ -22,15 +22,15 @@
 
   <link
     rel="apple-touch-icon"
-    sizes="512x512"
-    href="./StarGrida_iOS_512.png"
+    sizes="180x180"
+    href="./StarGrida_AppIcon_180.png"
   >
 
   <link
     rel="icon"
     type="image/png"
     sizes="512x512"
-    href="./StarGrida_iOS_512.png"
+    href="./StarGrida_AppIcon_512.png"
   >
 
   <style>
@@ -45,11 +45,20 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+
       background: #b9e9fb;
-      font-family: Arial, "Noto Sans KR", sans-serif;
+
+      font-family:
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
     }
 
-    /* 실제 출결 시스템 */
+
+    /* ==================================================
+       실제 출결 시스템
+    ================================================== */
+
     #attendanceApp {
       position: fixed;
       inset: 0;
@@ -60,16 +69,23 @@
 
       margin: 0;
       padding: 0;
+
       border: 0;
 
       display: block;
+
       background: #b9e9fb;
     }
 
-    /* 로딩 화면 */
+
+    /* ==================================================
+       로딩 화면
+    ================================================== */
+
     #loadingScreen {
       position: fixed;
       inset: 0;
+
       z-index: 9999;
 
       display: flex;
@@ -98,31 +114,40 @@
         visibility 0.35s ease;
     }
 
+
     #loadingScreen.hide {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
 
+
     .loading-content {
       text-align: center;
-      transform: translateY(-4vh);
+
+      transform:
+        translateY(-4vh);
     }
+
+
+    /* ==================================================
+       공식 별그리다 심볼
+       - 원본 PNG 그대로 표시
+       - 둥근 모서리 / 그림자 없음
+    ================================================== */
 
     .loading-icon {
       width: 112px;
       height: 112px;
 
       display: block;
-      margin: 0 auto 18px;
+
+      margin:
+        0 auto 18px;
 
       object-fit: contain;
-
-      border-radius: 24px;
-
-      box-shadow:
-        0 10px 30px rgba(0, 100, 160, 0.14);
     }
+
 
     .loading-title {
       margin: 0;
@@ -131,8 +156,10 @@
 
       font-size: 27px;
       font-weight: 900;
+
       letter-spacing: -0.5px;
     }
+
 
     .loading-message {
       margin-top: 11px;
@@ -143,13 +170,22 @@
       font-weight: 700;
     }
 
+
     .loading-dots {
       display: inline-block;
+
       width: 28px;
+
       text-align: left;
     }
 
+
+    /* ==================================================
+       모바일
+    ================================================== */
+
     @media (max-width: 480px) {
+
       .loading-icon {
         width: 100px;
         height: 100px;
@@ -162,13 +198,19 @@
       .loading-message {
         font-size: 15px;
       }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- 실제 출결 시스템 -->
+  <!-- ==================================================
+       실제 별그리다 출결 시스템
+  ================================================== -->
+
   <iframe
     id="attendanceApp"
     src="https://script.google.com/macros/s/AKfycbxBPzUg6g3jmztjuUSfoIyIfHtuRKpADADKPq7S6FLJSbmhl57Xmm1jtSnxtfTo8y9t6A/exec"
@@ -176,13 +218,18 @@
     allow="fullscreen"
   ></iframe>
 
-  <!-- 로딩 화면 -->
+
+  <!-- ==================================================
+       로딩 화면
+  ================================================== -->
+
   <div id="loadingScreen">
+
     <div class="loading-content">
 
       <img
         class="loading-icon"
-        src="./StarGrida_iOS_512.png"
+        src="./StarGrida_Symbol.png"
         alt="별그리다"
       >
 
@@ -191,53 +238,101 @@
       </h1>
 
       <div class="loading-message">
+
         출결 시스템을 불러오는 중입니다<span
           id="loadingDots"
           class="loading-dots"
         >.</span>
+
       </div>
 
     </div>
+
   </div>
 
+
   <script>
+
     const iframe =
-      document.getElementById('attendanceApp');
+      document.getElementById(
+        'attendanceApp'
+      );
+
 
     const loadingScreen =
-      document.getElementById('loadingScreen');
+      document.getElementById(
+        'loadingScreen'
+      );
+
 
     const loadingDots =
-      document.getElementById('loadingDots');
+      document.getElementById(
+        'loadingDots'
+      );
+
 
     let dotCount = 1;
 
+
+    /* ==================================================
+       로딩 점 애니메이션
+    ================================================== */
+
     const dotTimer =
-      setInterval(function () {
+      setInterval(
+        function () {
 
-        dotCount++;
+          dotCount++;
 
-        if (dotCount > 3) {
-          dotCount = 1;
-        }
+          if (
+            dotCount > 3
+          ) {
 
-        loadingDots.textContent =
-          '.'.repeat(dotCount);
+            dotCount = 1;
 
-      }, 400);
+          }
 
+
+          loadingDots.textContent =
+            '.'.repeat(
+              dotCount
+            );
+
+        },
+        400
+      );
+
+
+    /* ==================================================
+       로딩 화면 닫기
+    ================================================== */
 
     function hideLoadingScreen() {
 
-      clearInterval(dotTimer);
+      clearInterval(
+        dotTimer
+      );
 
-      setTimeout(function () {
 
-        loadingScreen.classList.add('hide');
+      setTimeout(
+        function () {
 
-      }, 180);
+          loadingScreen
+            .classList
+            .add(
+              'hide'
+            );
+
+        },
+        180
+      );
+
     }
 
+
+    /* ==================================================
+       Apps Script 화면 로딩 완료
+    ================================================== */
 
     iframe.addEventListener(
       'load',
@@ -245,18 +340,34 @@
     );
 
 
-    /* 혹시 load 이벤트가 늦어져도
-       로딩화면이 계속 남지 않도록 안전장치 */
-    setTimeout(function () {
+    /* ==================================================
+       안전장치
 
-      if (
-        !loadingScreen.classList.contains('hide')
-      ) {
+       Apps Script load 이벤트가 늦어지거나
+       브라우저에서 이벤트를 놓쳐도
+       로딩화면이 계속 남지 않도록
+       최대 8초 뒤 자동 종료
+    ================================================== */
 
-        hideLoadingScreen();
-      }
+    setTimeout(
+      function () {
 
-    }, 8000);
+        if (
+          !loadingScreen
+            .classList
+            .contains(
+              'hide'
+            )
+        ) {
+
+          hideLoadingScreen();
+
+        }
+
+      },
+      8000
+    );
+
   </script>
 
 </body>
